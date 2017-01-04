@@ -1,9 +1,9 @@
 /**
- * read from csv file to take in an array and return the trimmed array
+ * Created by neerajaggarwal on 1/4/17.
  */
-public class trimmer {
+public class Trimmer {
 
-    public void trim() {
+    public void dataTrimmer() {
         return;
     }
 }
