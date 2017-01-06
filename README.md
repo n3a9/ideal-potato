@@ -11,4 +11,4 @@ Built using Java. The CSV file is parsed and data sets are put into an ArrayList
 ## Contributors
 [Neeraj Aggarwal](http://neerajaggarwal.com)
 
-Patrick Zhong
+[Patrick Zhong](https://github.com/18PatZ)
