@@ -29,7 +29,7 @@ public class Parser {
 			}
 			
 			for(ArrayList<Double> column : data){
-				Trimmer.dataTrimmer(column);
+				Trimmer.dataTrimmer(column, 1);
 			}
 			
 			br.close();
