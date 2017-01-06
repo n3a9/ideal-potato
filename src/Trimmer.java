@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Trimmer {
 
@@ -31,7 +32,55 @@ public class Trimmer {
     //implement IQR outlier identification
     private static ArrayList<Double> findOutliersOne(ArrayList<Double> data) {
         ArrayList<Double> outliers = new ArrayList<>(); //create empty array of doubles
+        double iqrDistance= findIQR(data)*1.5;
+        double[] quartiles = findQuartiles(data);
+        double lowerQuartile = quartiles[0];
+        double upperQuartile = quartiles[1];
+        for (double x: data) {
+            if ((Math.abs(x-lowerQuartile) > iqrDistance) || (Math.abs(x-upperQuartile) > iqrDistance)) {
+                outliers.add(x);
+            }
+        }
         return outliers;
+    }
+
+    private static double findIQR(ArrayList<Double> data) {
+        double[] quartile = findQuartiles(data);
+        return quartile[1] - quartile[0];
+    }
+
+    //iqr[0] is the lower quartile
+    //iqr[1] is the upper quartile
+    private static double[] findQuartiles(ArrayList<Double> data) {
+        //sort the data (lowest to highest)
+        Collections.sort(data);
+        double[] quartile = new double[2];
+        ArrayList<Double> lowerHalf = new ArrayList<>();
+        ArrayList<Double> upperHalf = new ArrayList<>();
+        double median = findMedian(data);
+        if (data.size()%2==0) { //if size of data is even
+            lowerHalf = (ArrayList<Double>) data.subList(0, (data.size()/2)-1);
+            upperHalf = (ArrayList<Double>) data.subList(data.size()/2, data.size()-1);
+        } else {
+            lowerHalf = (ArrayList<Double>) data.subList(0, (data.size()/2)-2);
+            upperHalf = (ArrayList<Double>) data.subList(data.size()/2, data.size()-1);
+        }
+        quartile[0] = findMedian(lowerHalf);
+        quartile[1] = findMedian(upperHalf);
+        return quartile;
+    }
+
+    //precondition - data is presorted
+    private static double findMedian(ArrayList<Double> data) {
+        if (data.size()%2!=0) { //size is odd
+            return data.get(data.size()/2); //return middle
+        } else {
+            return average(data.get(data.size()/2), data.get((data.size()/2)+1)); //return average of middle two values
+        }
+    }
+
+    private static double average(double x, double y) {
+        return (x+y)/2;
     }
 
     //based on 2 times more than standard deviation
