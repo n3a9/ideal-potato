@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Trimmer {
 
@@ -25,6 +26,8 @@ public class Trimmer {
 			findOutliersTwo(data);
 		else
 			throw new java.lang.Error("second parameter is not 1 or 2!!!!!!!!!!!!");
+		
+		System.out.println(data);
 	}
 
 	/**
@@ -78,11 +81,8 @@ public class Trimmer {
 	private static double[] findQuartiles(ArrayList<Double> data) {
 		// sort the data (lowest to highest)
 		Collections.sort(data);
-		ArrayList<Double> lowerHalf = new ArrayList<>();
-		ArrayList<Double> upperHalf = new ArrayList<>();
-
-		lowerHalf = (ArrayList<Double>) data.subList(0, (int) Math.floor(data.size() / 2.0 - 1));
-		upperHalf = (ArrayList<Double>) data.subList((int) Math.ceil(data.size() / 2.0), data.size() - 1);
+		List<Double> lowerHalf = data.subList(0, (int) Math.floor(data.size() / 2.0 - 1));
+		List<Double> upperHalf = data.subList((int) Math.ceil(data.size() / 2.0), data.size() - 1);
 
 		return new double[] { findMedian(lowerHalf), findMedian(upperHalf) };
 	}
@@ -99,7 +99,7 @@ public class Trimmer {
 	 *
 	 * @return: the median of the given data set
 	 */
-	private static double findMedian(ArrayList<Double> data) {
+	private static double findMedian(List<Double> data) {
 		if (data.size() % 2 != 0) // size is odd
 			return data.get(data.size() / 2); // return middle value
 		else

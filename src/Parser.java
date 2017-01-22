@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Parser {
 	
@@ -23,18 +24,20 @@ public class Parser {
 					}
 					else
 						column = data.get(i);
-					
-					column.add(Double.parseDouble(splitted.get(i)));
+					column.add((double)Integer.parseInt(splitted.get(i).trim()));
 				}
 			}
 			
 			for(ArrayList<Double> column : data){
-				Trimmer.dataTrimmer(column, 1);
+				Collections.sort(column);
+				System.out.println(column);
+				Trimmer.dataTrimmer(column, 2);
 			}
 			
 			br.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("While parsing the file, a "+e.getClass().getName()+" was encountered. Please try again.");
+		
 			return;
 		}
 	}
